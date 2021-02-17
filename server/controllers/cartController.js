@@ -16,6 +16,7 @@ module.exports = {
 		try {
 			const { quantity } = req.query;
 			const { productId } = req.body;
+			console.log(productId)
 			const item = await Cart.findOne({ userId: req._id, productId });
 			if (!quantity) {
 				if (!item) {
@@ -90,4 +91,17 @@ module.exports = {
 			next(error);
 		}
 	},
+	getcart : async function (req, res, next) {
+		try {
+		const cartItems =await Cart.find({userId:req._id}).select("quantity").populate({
+		  path: "productId",
+		  select: "name cost",
+		});
+		
+		return res.status(200).json({success:true, cart:cartItems})
+	  
+		} catch (error) {
+		  next(error);
+		}
+	  }
 };

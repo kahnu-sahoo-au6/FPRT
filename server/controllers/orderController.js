@@ -37,4 +37,15 @@ module.exports={
       next(error);
     }
   },
+  getallorders:async function (req, res, next) {
+    try {
+      const orders = await Order.find({userId:req._id}).select("quantity amount status").populate({
+        path: "productId",
+        select: "name",
+      });
+      return res.status(200).json({success:true, orders})
+    } catch (error) {
+      next(error);
+    }
+  }
 }

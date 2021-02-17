@@ -15,10 +15,12 @@ module.exports = async function (req, res, next) {
 			});
 	}
 	const token = authHeader.split(" ")[1];
+	console.log(token)
 	if (!token) {
 		return res
 			.status(200)
 			.json({ status: 400, success: false, message: "Token not found" });
+			
 	}
 	try {
 		// adding both id and user to request

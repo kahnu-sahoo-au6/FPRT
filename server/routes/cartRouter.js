@@ -7,5 +7,6 @@ const auth = require('../middlewares/auth')
 
 router.post('/',auth, cartValidations.addtocart, cartController.addtocart)
 router.delete('/',auth,cartController.emptycart)
+router.get('/be',auth,cartController.getcart)
 
 module.exports = router

@@ -38,7 +38,7 @@ module.exports = {
 						.status(200)
 						.json({
 							success: false,
-							message: "AUTH_ERROR",
+							message: "User already exist! Please login.",
 							error: { status: 409, msg: "User already exist! Please login." },
 						});
 				} else {
@@ -98,7 +98,7 @@ module.exports = {
 					.status(200)
 					.json({
 						success: false,
-						message: "AUTH_ERROR",
+						message: "Password incorrect!",
 						error: { status: 400, message: "Password incorrect!" },
 					});
 			}
@@ -124,7 +124,7 @@ module.exports = {
 					.status(200)
 					.json({
 						success: false,
-						message: "AUTH_ERROR",
+						message: "User doesnt exist! Please register first",
 						error: {
 							status: 400,
 							message: "User doesnt exist! Please register first.",
@@ -183,4 +183,18 @@ module.exports = {
 			next(error);
 		}
 	},
+	logout:async function (req, res, next) {
+		try {
+			const user = req.user;
+			user.tokens = user.tokens.filter((token) => {
+				return token.token != req.token;
+			});
+			await user.save();
+			res
+				.status(200)
+				.json({ success: true, message: "Logged out successfully!" });
+		} catch (error) {
+			next(error);
+		}
+	}
 };

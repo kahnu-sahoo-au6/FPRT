@@ -8,5 +8,7 @@ const checkrole = require('../middlewares/checkRole')
 
 router.post('/',auth, orderValidations.createorder, orderController.createorder)
 router.put('/:status',auth,checkrole(2), orderValidations.updateorder, orderController.updateorder)
+router.get('/be',auth, orderController.getallorders)
+
 
 module.exports = router

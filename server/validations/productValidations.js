@@ -47,7 +47,7 @@ productValidation.addproduct = [
       .isEmpty()
       .withMessage("About is required!")
       .isLength({
-        min: 50,
+        min: 10,
       })
       .withMessage("About must be minimum 50 characters.")
   ];
